@@ -193,3 +193,8 @@ ROLE_REQUIRED_SKILLS = {
         "roadmapping"
     ]
 }
+ROLE_DESCRIPTIONS = {
+    "Software Engineer": "Designs and builds scalable software systems.",
+    "Data Scientist": "Analyzes data to extract insights and build models.",
+}
+

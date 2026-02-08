@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html>
+    <p style="color:#667eea;"><b>Level:</b> {{ level }}</p>
+
 <head>
     <title>Analysis Result</title>
+
     <style>
         body {
-            font-family: Arial;
-            background: #f4f6f9;
-            padding: 40px;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            margin: 0;
+            padding: 0;
         }
 
         .container {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 900px;
-            margin: auto;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 1000px;
+            margin: 50px auto;
+            box-shadow: 0px 8px 25px rgba(0,0,0,0.2);
         }
 
         h1 {
@@ -23,14 +27,21 @@
         }
 
         .section {
-            margin-top: 25px;
+            margin-top: 30px;
         }
 
         .box {
-            background: #f1f3f6;
-            padding: 15px;
+            background: #f8f9fb;
+            padding: 18px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            border-left: 5px solid #667eea;
+        }
+
+        .score {
+            font-size: 22px;
+            font-weight: bold;
+            color: #667eea;
         }
 
         ul {
@@ -39,7 +50,12 @@
 
         a {
             text-decoration: none;
-            color: #007BFF;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
     </style>
@@ -51,26 +67,26 @@
     <h1>Your Career Analysis Result</h1>
 
     <div class="section">
-        <h2>🏆 Best Matching Role</h2>
+        <h2>Best Matching Role</h2>
         <div class="box">
-            <p><strong>{{ best_role }}</strong></p>
+            <p class="score">{{ best_role }}</p>
             <p>Compatibility Score: {{ best_score }}</p>
         </div>
     </div>
 
     <div class="section">
-        <h2>📊 Resume Match</h2>
+        <h2>Resume Match</h2>
         <div class="box">
-            <p>Match Percentage: {{ resume_analysis.match_percentage }}%</p>
+            <p><strong>Match Percentage:</strong> {{ resume_analysis.match_percentage }}%</p>
 
-            <h4>Matched Skills:</h4>
+            <h4>Matched Skills</h4>
             <ul>
                 {% for skill in resume_analysis.matched_skills %}
                     <li>{{ skill }}</li>
                 {% endfor %}
             </ul>
 
-            <h4>Missing Skills:</h4>
+            <h4>Missing Skills</h4>
             <ul>
                 {% for skill in resume_analysis.missing_skills %}
                     <li>{{ skill }}</li>
@@ -80,18 +96,24 @@
     </div>
 
     <div class="section">
-        <h2>🛣 Recommended Roadmap</h2>
+        <h2>Recommended Roadmap</h2>
 
         {% for level, items in roadmap.items() %}
             <div class="box">
                 <h3>{{ level }}</h3>
                 <ul>
-                    {% for item, link in items %}
-                        <li>
-                            {{ item }} -
-                            <a href="{{ link }}" target="_blank">Learn Here</a>
-                        </li>
-                    {% endfor %}
+                    {% for item in items %}
+<div style="margin-bottom:15px;">
+    <strong>{{ item.title }}</strong><br>
+    <small>{{ item.description }}</small><br><br>
+
+    <a href="{{ item.free_resource }}" target="_blank">Free Resource</a> |
+    <a href="{{ item.premium_resource }}" target="_blank">Premium Resource</a>
+
+    <p><b>Mini Project:</b> {{ item.project }}</p>
+</div>
+{% endfor %}
+
                 </ul>
             </div>
         {% endfor %}
