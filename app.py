@@ -1,60 +1,63 @@
 from flask import Flask, render_template, request
 from role_config import DOMAINS
-from engine import (
-    calculate_role_compatibility,
-    classify_readiness,
-    analyze_skill_gaps
-)
+from engine import calculate_role_scores, analyze_resume
 from roadmap import ROLE_ROADMAPS
 
 app = Flask(__name__)
 
 
-@app.route('/')
+# -----------------------------------------
+# HOME PAGE
+# -----------------------------------------
+
+@app.route("/")
 def home():
     return render_template("index.html", domains=DOMAINS)
 
 
-@app.route('/analyze', methods=['POST'])
+# -----------------------------------------
+# ANALYZE ROUTE
+# -----------------------------------------
+
+@app.route("/analyze", methods=["POST"])
 def analyze():
 
-    user_inputs = {}
+    # Collect skill levels from form
+    user_skills = {}
 
-    for domain in DOMAINS:
+    for domain in DOMAINS.keys():
         level = request.form.get(domain)
-        user_inputs[domain] = level
+        user_skills[domain] = level
 
-    # Calculate compatibility
-    results = calculate_role_compatibility(user_inputs)
+    # Resume text (optional)
+    resume_text = request.form.get("resume", "").lower()
 
-    top_role = results[0]
-    readiness = classify_readiness(top_role[1])
+    # Calculate role compatibility
+    role_scores = calculate_role_scores(user_skills)
 
-    # Strength & weakness analysis
-    strengths, weaknesses = analyze_skill_gaps(user_inputs)
+    # Get best role
+    best_role = max(role_scores, key=role_scores.get)
+    best_score = role_scores[best_role]
 
-    # Get roadmap
-    roadmap = ROLE_ROADMAPS.get(top_role[0], {})
+    # Resume analysis
+    resume_analysis = analyze_resume(best_role, resume_text)
 
-    # Personalize focus level
-    if readiness == "Highly Ready":
-        focus_level = "Advanced"
-    elif readiness == "Moderately Ready":
-        focus_level = "Intermediate"
-    else:
-        focus_level = "Foundation"
+    # Roadmap
+    roadmap = ROLE_ROADMAPS.get(best_role, {})
 
     return render_template(
         "result.html",
-        results=results,
-        top_role=top_role,
-        readiness=readiness,
-        strengths=strengths,
-        weaknesses=weaknesses,
-        roadmap=roadmap,
-        focus_level=focus_level
+        best_role=best_role,
+        best_score=best_score,
+        role_scores=role_scores,
+        resume_analysis=resume_analysis,
+        roadmap=roadmap
     )
 
 
-if __name__ == '__main__':
+# -----------------------------------------
+# RUN SERVER
+# -----------------------------------------
+
+if __name__ == "__main__":
     app.run(debug=True)

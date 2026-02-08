@@ -1,82 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PathPilot AI – Results</title>
+    <title>Analysis Result</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 900px;
+            margin: auto;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .box {
+            background: #f1f3f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+    </style>
 </head>
 <body>
 
-    <h1>PathPilot AI – Career Compatibility Report</h1>
+<div class="container">
 
-    <hr>
+    <h1>Your Career Analysis Result</h1>
 
-    <h2>Top Recommended Role:</h2>
-    <p><strong>{{ top_role[0] }}</strong> – {{ top_role[1] }}%</p>
-
-    <h3>Readiness Level:</h3>
-    <p><strong>{{ readiness }}</strong></p>
-
-    <hr>
-
-    <h3>Your Strongest Domains:</h3>
-    <ul>
-        {% for s in strengths %}
-            <li>{{ s }}</li>
-        {% endfor %}
-    </ul>
-
-    <h3>Domains To Improve:</h3>
-    <ul>
-        {% for w in weaknesses %}
-            <li>{{ w }}</li>
-        {% endfor %}
-    </ul>
-
-    <hr>
-
-    <h2>Personalized Roadmap</h2>
-    <h3>Recommended Focus: {{ focus_level }}</h3>
-
-    {% for level, steps in roadmap.items() %}
-        <div style="border:1px solid #ccc; padding:15px; margin:15px;">
-            <h3>{{ level }}</h3>
-
-            {% for step in steps %}
-                <div style="margin-bottom:15px;">
-                    <h4>{{ step.title }}</h4>
-                    <p>{{ step.description }}</p>
-
-                    <p>
-                        <a href="{{ step.free_resource }}" target="_blank">
-                            📘 Free Resource
-                        </a>
-                    </p>
-
-                    <p>
-                        <a href="{{ step.premium_resource }}" target="_blank">
-                            🎓 Premium Course (Udemy)
-                        </a>
-                    </p>
-
-                    <p><strong>Project:</strong> {{ step.project }}</p>
-
-                    <hr>
-                </div>
-            {% endfor %}
+    <div class="section">
+        <h2>🏆 Best Matching Role</h2>
+        <div class="box">
+            <p><strong>{{ best_role }}</strong></p>
+            <p>Compatibility Score: {{ best_score }}</p>
         </div>
-    {% endfor %}
+    </div>
 
-    <hr>
+    <div class="section">
+        <h2>📊 Resume Match</h2>
+        <div class="box">
+            <p>Match Percentage: {{ resume_analysis.match_percentage }}%</p>
 
-    <h3>All Role Compatibility Scores:</h3>
-    <ul>
-        {% for role, score in results %}
-            <li>{{ role }} – {{ score }}%</li>
+            <h4>Matched Skills:</h4>
+            <ul>
+                {% for skill in resume_analysis.matched_skills %}
+                    <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+
+            <h4>Missing Skills:</h4>
+            <ul>
+                {% for skill in resume_analysis.missing_skills %}
+                    <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🛣 Recommended Roadmap</h2>
+
+        {% for level, items in roadmap.items() %}
+            <div class="box">
+                <h3>{{ level }}</h3>
+                <ul>
+                    {% for item, link in items %}
+                        <li>
+                            {{ item }} -
+                            <a href="{{ link }}" target="_blank">Learn Here</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 
-    <hr>
-
-    <a href="/">Recalculate</a>
+</div>
 
 </body>
 </html>

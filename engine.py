@@ -1,64 +1,58 @@
-# engine.py
+# ============================================
+# ENGINE LOGIC
+# ============================================
 
-from role_config import LEVEL_SCORES, ROLE_WEIGHTS
+from role_config import LEVEL_SCORES, ROLE_WEIGHTS, ROLE_REQUIRED_SKILLS
 
 
-def calculate_role_compatibility(user_inputs):
+# --------------------------------------------
+# ROLE SCORING ENGINE
+# --------------------------------------------
 
-    numeric_scores = {}
-
-    for domain, level in user_inputs.items():
-        numeric_scores[domain] = LEVEL_SCORES.get(level, 0)
+def calculate_role_scores(user_skills):
 
     role_scores = {}
 
     for role, weights in ROLE_WEIGHTS.items():
+
         total_score = 0
-        max_possible = 0
 
         for domain, weight in weights.items():
-            user_score = numeric_scores.get(domain, 0)
 
-            total_score += user_score * weight
-            max_possible += 4 * weight
+            level = user_skills.get(domain, "nothing")
+            numeric_level = LEVEL_SCORES.get(level, 0)
 
-        compatibility_percentage = (total_score / max_possible) * 100
-        role_scores[role] = round(compatibility_percentage, 2)
+            total_score += numeric_level * weight
 
-    sorted_roles = sorted(
-        role_scores.items(),
-        key=lambda x: x[1],
-        reverse=True
-    )
+        role_scores[role] = total_score
 
-    return sorted_roles
+    return role_scores
 
 
-def classify_readiness(score):
-    if score >= 80:
-        return "Highly Ready"
-    elif score >= 60:
-        return "Moderately Ready"
-    elif score >= 40:
-        return "Needs Improvement"
+# --------------------------------------------
+# RESUME ANALYZER
+# --------------------------------------------
+
+def analyze_resume(role, resume_text):
+
+    required_skills = ROLE_REQUIRED_SKILLS.get(role, [])
+
+    matched = []
+    missing = []
+
+    for skill in required_skills:
+        if skill.lower() in resume_text:
+            matched.append(skill)
+        else:
+            missing.append(skill)
+
+    if len(required_skills) == 0:
+        match_percentage = 0
     else:
-        return "Beginner Level"
+        match_percentage = int((len(matched) / len(required_skills)) * 100)
 
-
-def analyze_skill_gaps(user_inputs):
-
-    numeric_scores = {}
-
-    for domain, level in user_inputs.items():
-        numeric_scores[domain] = LEVEL_SCORES.get(level, 0)
-
-    sorted_domains = sorted(
-        numeric_scores.items(),
-        key=lambda x: x[1],
-        reverse=True
-    )
-
-    strengths = [d[0] for d in sorted_domains if d[1] >= 3]
-    weaknesses = [d[0] for d in sorted_domains if d[1] <= 2]
-
-    return strengths[:3], weaknesses[:3]
+    return {
+        "matched_skills": matched,
+        "missing_skills": missing,
+        "match_percentage": match_percentage
+    }

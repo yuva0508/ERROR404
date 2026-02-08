@@ -1,28 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PathPilot AI</title>
+    <title>AI Career Role Analyzer</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .domain-box {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>PathPilot AI – Skill Assessment</h1>
+<div class="container">
 
-    <form method="POST" action="/analyze">
+    <h1>AI Career Compatibility Engine</h1>
 
-        {% for domain in domains %}
-            <label>{{ domain }}</label>
-            <select name="{{ domain }}">
-                <option value="Poor">Poor</option>
-                <option value="Average">Average</option>
-                <option value="Good">Good</option>
-                <option value="Excellent">Excellent</option>
-            </select>
-            <br><br>
+    <form action="/analyze" method="POST">
+
+        {% for key, value in domains.items() %}
+            <div class="domain-box">
+                <label><strong>{{ value }}</strong></label>
+                <select name="{{ key }}" required>
+                    <option value="nothing">Nothing</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="average">Average</option>
+                    <option value="good">Good</option>
+                    <option value="awesome">Awesome</option>
+                </select>
+            </div>
         {% endfor %}
 
-        <button type="submit">Analyze Compatibility</button>
+        <label><strong>Paste Your Resume Text (Optional)</strong></label>
+        <textarea name="resume" rows="6" placeholder="Paste resume content here..."></textarea>
+
+        <button type="submit">Analyze My Role</button>
 
     </form>
+
+</div>
 
 </body>
 </html>
