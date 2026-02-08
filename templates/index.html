@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Career Guidance System</title>
+    <title>PathPilot AI</title>
 </head>
 <body>
-    <h1>Welcome to Career Guidance System</h1>
+
+    <h1>PathPilot AI – Skill Assessment</h1>
+
+    <form method="POST" action="/analyze">
+
+        {% for domain in domains %}
+            <label>{{ domain }}</label>
+            <select name="{{ domain }}">
+                <option value="Poor">Poor</option>
+                <option value="Average">Average</option>
+                <option value="Good">Good</option>
+                <option value="Excellent">Excellent</option>
+            </select>
+            <br><br>
+        {% endfor %}
+
+        <button type="submit">Analyze Compatibility</button>
+
+    </form>
+
 </body>
 </html>

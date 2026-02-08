@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PathPilot AI – Results</title>
+</head>
+<body>
+
+    <h1>PathPilot AI – Career Compatibility Report</h1>
+
+    <hr>
+
+    <h2>Top Recommended Role:</h2>
+    <p><strong>{{ top_role[0] }}</strong> – {{ top_role[1] }}%</p>
+
+    <h3>Readiness Level:</h3>
+    <p><strong>{{ readiness }}</strong></p>
+
+    <hr>
+
+    <h3>Your Strongest Domains:</h3>
+    <ul>
+        {% for s in strengths %}
+            <li>{{ s }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Domains To Improve:</h3>
+    <ul>
+        {% for w in weaknesses %}
+            <li>{{ w }}</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <h2>Personalized Roadmap</h2>
+    <h3>Recommended Focus: {{ focus_level }}</h3>
+
+    {% for level, steps in roadmap.items() %}
+        <div style="border:1px solid #ccc; padding:15px; margin:15px;">
+            <h3>{{ level }}</h3>
+
+            {% for step in steps %}
+                <div style="margin-bottom:15px;">
+                    <h4>{{ step.title }}</h4>
+                    <p>{{ step.description }}</p>
+
+                    <p>
+                        <a href="{{ step.free_resource }}" target="_blank">
+                            📘 Free Resource
+                        </a>
+                    </p>
+
+                    <p>
+                        <a href="{{ step.premium_resource }}" target="_blank">
+                            🎓 Premium Course (Udemy)
+                        </a>
+                    </p>
+
+                    <p><strong>Project:</strong> {{ step.project }}</p>
+
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <hr>
+
+    <h3>All Role Compatibility Scores:</h3>
+    <ul>
+        {% for role, score in results %}
+            <li>{{ role }} – {{ score }}%</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <a href="/">Recalculate</a>
+
+</body>
+</html>
