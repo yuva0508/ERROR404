@@ -2,17 +2,62 @@ from flask import Flask, render_template, request
 from role_config import DOMAINS
 from engine import calculate_role_scores, analyze_resume
 from roadmap import ROLE_ROADMAPS
+from flask import session, redirect, url_for
+from database import init_db
+from auth import register_user, validate_user
+init_db()
 
 app = Flask(__name__)
+app.secret_key = "career_guidance_secret"
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if validate_user(username, password):
+            session["user"] = username
+            return redirect(url_for("home"))
+
+        else:
+            return "Invalid Credentials"
+
+    return render_template("login.html")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if register_user(username, password):
+            return redirect(url_for("login"))
+        else:
+            return "User already exists"
+
+    return render_template("register.html")
+@app.route("/logout")
+def logout():
+    session.pop("user", None)
+    return redirect(url_for("login"))
 
 # -----------------------------------------
 # HOME PAGE
 # -----------------------------------------
 
 @app.route("/")
+def root():
+    return redirect(url_for("login"))
+
+@app.route("/home")
 def home():
-    return render_template("index.html", domains=DOMAINS)
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("index.html", domains=DOMAINS, session=session)
 
 
 # -----------------------------------------
