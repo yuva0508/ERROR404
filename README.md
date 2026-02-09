@@ -66,7 +66,7 @@ python app.py
 # Step 4: Open in Browser
 http://127.0.0.1:5000
 
-🎯 How It Works
+## 🎯 How It Works
 
 Students select their skill levels across domains.
 
@@ -80,7 +80,7 @@ Shows preparation level and companies hiring for the role.
 
 Provides personalized learning roadmap with projects and resources.
 
-📊 Example Output
+## 📊 Example Output
 
 Best Role: Software Engineer
 
@@ -100,7 +100,7 @@ Companies Hiring: Google, Microsoft, Amazon
 
 Roadmap: Build projects, learn Data Structures, system design tutorials
 
-💡 Future Improvements
+## 💡 Future Improvements
 
 AI-based resume parsing (PDF/DOCX)
 
@@ -112,7 +112,7 @@ Interactive interview preparation module
 
 Cloud deployment for online access
 
-🤝 Contributing
+## 🤝 Contributing
 
 Contributions are welcome!
 
@@ -128,7 +128,7 @@ Push (git push origin feature-name)
 
 Create a Pull Request
 
-📜 License
+## 📜 License
 
 This project is for educational and competition purposes.
 
