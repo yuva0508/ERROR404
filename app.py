@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-from role_config import DOMAINS
-from engine import calculate_role_scores, analyze_resume
+from role_config import DOMAINS,ROLE_COMPANIES
+from engine import calculate_role_scores, analyze_resume,get_preparation_level
 from roadmap import ROLE_ROADMAPS
 from flask import session, redirect, url_for
 from database import init_db
@@ -76,6 +76,7 @@ def analyze():
 
     # Resume text (optional)
     resume_text = request.form.get("resume", "").lower()
+    
 
     # Calculate role compatibility
     role_scores = calculate_role_scores(user_skills)
@@ -83,6 +84,8 @@ def analyze():
     # Get best role
     best_role = max(role_scores, key=role_scores.get)
     best_score = role_scores[best_role]
+    # Preparation level (S5)
+    preparation_level = get_preparation_level(best_score)
 
     # -----------------------------------
     # ADD THIS PART (Percentage logic)
@@ -94,6 +97,7 @@ def analyze():
 
     # Resume analysis
     resume_analysis = analyze_resume(best_role, resume_text)
+    companies = ROLE_COMPANIES.get(best_role, [])
 
     # Roadmap
     roadmap = ROLE_ROADMAPS.get(best_role, {})
@@ -105,7 +109,9 @@ def analyze():
         compatibility_percentage=compatibility_percentage,  # send to HTML
         role_scores=role_scores,
         resume_analysis=resume_analysis,
-        roadmap=roadmap
+        roadmap=roadmap,
+        preparation_level=preparation_level,
+        companies=companies
     )
 
 

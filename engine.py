@@ -56,3 +56,18 @@ def analyze_resume(role, resume_text):
         "missing_skills": missing,
         "match_percentage": match_percentage
     }
+# --------------------------------------------
+# PREPARATION LEVEL BENCHMARK (S5)
+# Works with percentage scores (0–100)
+# --------------------------------------------
+
+def get_preparation_level(percentage):
+
+    if percentage < 40:
+        return "Beginner"
+    elif percentage < 60:
+        return "Intermediate"
+    elif percentage < 80:
+        return "Advanced"
+    else:
+        return "Placement Ready"

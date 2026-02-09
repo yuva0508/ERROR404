@@ -193,6 +193,62 @@ ROLE_REQUIRED_SKILLS = {
         "roadmapping"
     ]
 }
+
+# --------------------------------------------
+# COMPANIES HIRING BY ROLE (S4)
+# --------------------------------------------
+
+ROLE_COMPANIES = {
+
+    "Software Engineer": [
+        "Google", "Microsoft", "Amazon", "Zoho", "Infosys", "TCS"
+    ],
+
+    "Full Stack Developer": [
+        "Freshworks", "Zoho", "Amazon", "Startups", "Accenture"
+    ],
+
+    "Data Scientist": [
+        "Amazon", "Flipkart", "MuSigma", "Fractal Analytics", "TCS"
+    ],
+
+    "Machine Learning Engineer": [
+        "Google", "NVIDIA", "Amazon", "OpenAI", "Microsoft"
+    ],
+
+    "Cloud Engineer": [
+        "AWS", "Google Cloud", "Microsoft Azure", "IBM", "Oracle"
+    ],
+
+    "DevOps Engineer": [
+        "Amazon", "Zoho", "Infosys", "Accenture", "Capgemini"
+    ],
+
+    "Cybersecurity Analyst": [
+        "Quick Heal", "Palo Alto Networks", "K7 Security", "TCS"
+    ],
+
+    "UI/UX Designer": [
+        "Adobe", "Flipkart", "Swiggy", "Zomato", "Startups"
+    ],
+
+    "Product Manager": [
+        "Google", "Amazon", "Freshworks", "Microsoft"
+    ],
+
+    "Business Analyst": [
+        "Deloitte", "EY", "KPMG", "TCS", "Infosys"
+    ],
+
+    "Digital Marketing Strategist": [
+        "Ogilvy", "Wipro Digital", "Startups", "Amazon"
+    ],
+
+    "AI Product Strategist": [
+        "Google", "Microsoft", "OpenAI", "Amazon"
+    ]
+}
+
 ROLE_DESCRIPTIONS = {
     "Software Engineer": "Designs and builds scalable software systems.",
     "Data Scientist": "Analyzes data to extract insights and build models.",
