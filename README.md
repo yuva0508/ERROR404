@@ -52,18 +52,18 @@ career_project/
 
 ## ⚙️ Installation & Setup
 
-## Step 1: Clone the Repository
+# Step 1: Clone the Repository
 
 git clone https://github.com/your-username/career-role-analyser.git
 cd career-role-analyser
 
-Step 2: Install Dependencies
+# Step 2: Install Dependencies
 pip install flask
 
-Step 3: Run the Project
+# Step 3: Run the Project
 python app.py
 
-Step 4: Open in Browser
+# Step 4: Open in Browser
 http://127.0.0.1:5000
 
 🎯 How It Works
